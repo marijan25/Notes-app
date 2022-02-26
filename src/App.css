@@ -1,0 +1,19 @@
+.btn{
+  background-color: #009eb6;
+  border: none;
+  cursor: pointer;
+}
+
+.btn:hover{
+  background-color: #007eb3;
+}
+
+.btn-modal{
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  background-color: #21b5b4;
+  cursor: pointer;
+  color: white;
+}
+
