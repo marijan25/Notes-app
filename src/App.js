@@ -1,6 +1,5 @@
-import './App.css';
 import Grid from '@mui/material/Grid';
-import Notes from './components/Notes';
+import Note from './components/Note';
 import { Container } from '@mui/material';
 import Heading from './components/Heading';
 import Paper from '@mui/material/Paper'
@@ -16,7 +15,7 @@ function App() {
       <Heading />
       <Container sx={{marginTop:5, marginBottom:12}}>    
         <Grid container spacing={5}>   
-          {notesList.exampleNotes.map((note,index) => <Notes note={note} key={note.id} />)}  
+          {notesList.exampleNotes.map((note,index) => <Note note={note} key={note.id} />)}  
         </Grid>
       </Container>   
       <Paper sx={{position:'fixed',bottom:0, left:0, right:0}} elevation={3}>

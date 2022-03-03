@@ -6,9 +6,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Typography  from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
-import '../App.css';
 
-const Notes = ({note}) => {
+const Note = ({note}) => {
   return (
     <Grid item xs = {4}>
       <Paper elevation={20} sx={{height:180,width:300,backgroundColor:'#9effff'}}>
@@ -48,4 +47,4 @@ const Notes = ({note}) => {
   )
 }
 
-export default Notes
+export default Note
