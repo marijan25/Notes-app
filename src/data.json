@@ -1,0 +1,32 @@
+    {
+        "exampleNotes":
+        [
+            {
+                "id": 1,
+                "title": "Definition of Done",
+                "content": "Each task you have here should be made with the following procedure: - For each ticket, you should create a separate branch from the master branch"
+            },
+            {
+                "id": 2,
+                "title": "Layout of page",
+                "content": "List of hardcoded notes (each note should have a title and short content), - Add button,- Edit button for each note,- Delete button for each note" 
+            },
+            {
+                "id": 3,
+                "title": "Create note",
+                "content": "- Subject/Title of Note ( required field ), - The content of note limited to 300 characters (required field)."
+            },
+            {
+                "id": 4,
+                "title": "Edit note",
+                "content": "When a user clicks on edit, the same modal as Add note should be displayed with the same rules with few changes - Instead of Add Button, there should be an Edit button."
+            },
+            {
+                "id": 5,
+                "title": "Delete note",
+                "content": "When a user clicks on delete button, confirmation modal should be displayed with a question Delete note title* ?"
+            }
+        ]
+    }
+
+   
