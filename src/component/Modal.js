@@ -74,7 +74,7 @@ export default function CustomizedDialogs() {
 
   return (
     <Grid>
-      <Button sx={{height:60, backgroundColor:'#6ffbff'}} variant="contained" onClick={handleClickOpen} startIcon={<NoteAddIcon />}>
+      <Button sx={{backgroundColor: '#21b5b4',color:'white', width:200, height:57}} variant="contained" onClick={handleClickOpen} startIcon={<NoteAddIcon />}>
         Add New Note
       </Button>
       <BootstrapDialog
@@ -128,7 +128,3 @@ export default function CustomizedDialogs() {
     </Grid>
   );
 }
-
-
-
-  
