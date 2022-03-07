@@ -6,6 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Typography  from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
+import CustomizedDialogs from '../components/EditModal';
 
 const Note = ({note}) => {
   return (
@@ -21,9 +22,9 @@ const Note = ({note}) => {
           }}>
           <Box>
             <Stack direction="row">
-              <IconButton aria-label="edit">
-                <EditIcon />
-              </IconButton>
+              
+              <CustomizedDialogs />   
+              
               <IconButton aria-label="delete">
                 <DeleteIcon />
               </IconButton>
