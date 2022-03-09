@@ -7,7 +7,7 @@ import Typography  from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 
-const Note = ({note}) => {
+const Note = ({note,onDelete}) => {
   return (
     <Grid item xs = {4}>
       <Paper elevation={20} sx={{height:180,width:300,backgroundColor:'#9effff'}}>
@@ -24,7 +24,7 @@ const Note = ({note}) => {
               <IconButton aria-label="edit">
                 <EditIcon />
               </IconButton>
-              <IconButton aria-label="delete">
+              <IconButton onClick={() => onDelete(note.id)} aria-label="delete">
                 <DeleteIcon />
               </IconButton>
             </Stack>
