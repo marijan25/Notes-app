@@ -2,11 +2,12 @@ import Grid from '@mui/material/Grid';
 import Note from './components/Note';
 import { Container } from '@mui/material';
 import Heading from './components/Heading';
-import Paper from '@mui/material/Paper'
+import Paper from '@mui/material/Paper';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import Button from '@mui/material/Button';
 import AddBoxIcon from '@mui/icons-material/AddBox';
-import { useState } from 'react'
+import { useState } from 'react';
+import DeleteModal from './components/DeleteModal';
 
 function App() {
   const [notes, setNotes] = useState([
@@ -36,8 +37,32 @@ function App() {
       content: "When a user clicks on delete button, confirmation modal should be displayed with a question Delete note title* ?"
     }
   ])
+  const [openDeleteModal, setOpenDeleteModal] = useState({
+    show: false,
+    id: null,
+    titleNote: ""
+  });
+  const handleDialog = (show, id, titleNote) => {
+    setOpenDeleteModal({
+      show,
+      id,
+      titleNote
+    })
+  }
   const deleteNote = (id) => {
-    setNotes(notes.filter((note) => note.id !== id))
+   const index = notes.findIndex((note) => note.id === id)
+   handleDialog(true, id, notes[index].title)
+  }
+  const deleteNoteTrue = (id, titleNote) => {
+    if(openDeleteModal.show && openDeleteModal.id){
+      let filteredData = notes.filter((note) => note.id !== openDeleteModal.id)
+      setNotes(filteredData)
+      setOpenDeleteModal({
+        show: false,
+        id,
+        titleNote
+      })
+    }
   }
   return (
     <Grid>
@@ -52,6 +77,12 @@ function App() {
           <Button variant="contained" sx={{backgroundColor: '#21b5b4',color:'white', width:200, height:57}}><AddBoxIcon />ADD NEW NOTES</Button>
         </BottomNavigation>
       </Paper>
+      {openDeleteModal.show && <DeleteModal 
+        titleNote={openDeleteModal.titleNote}
+        openDeleteModal={openDeleteModal} 
+        setOpenDeleteModal={setOpenDeleteModal} 
+        deleteNoteTrue={deleteNoteTrue}
+      />}
     </Grid>
   );
 }
