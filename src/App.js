@@ -6,7 +6,8 @@ import Paper from '@mui/material/Paper'
 import BottomNavigation from '@mui/material/BottomNavigation';
 import Button from '@mui/material/Button';
 import AddBoxIcon from '@mui/icons-material/AddBox';
-import { useContext, useState } from 'react'
+import { useState } from 'react'
+import EditForm from './components/EditForm'
 
 function App() {
   const [notes, setNotes] = useState([
@@ -37,13 +38,12 @@ function App() {
   }
   ])
 
-
   return (
     <Grid>
       <Heading />
       <Container sx={{marginTop:5, marginBottom:12}}>    
         <Grid container spacing={5}>   
-          {notes.map((note,index) => <Note note={note} key={note.id} />)}  
+          {notes.map((note) => <Note note={note} key={note.id} />)}  
         </Grid>
       </Container>   
       <Paper sx={{position:'fixed',bottom:0, left:0, right:0}} elevation={3}>

@@ -17,6 +17,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import EditIcon from '@mui/icons-material/Edit';
+import EditForm from '../components/EditForm'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -53,8 +54,7 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function CustomizedDialogs({ note }) {
-  const [open, setOpen] = React.useState(false);
+export default function CustomizedDialogs({note, children, open, setOpen}) {
   const [titleNote, setTitleNote] = useState("");
   const [contentNote, setContentNote] = useState("");
   const handleClickOpen = () => {
@@ -93,62 +93,7 @@ export default function CustomizedDialogs({ note }) {
           Edit note
         </BootstrapDialogTitle>
         <DialogContent dividers>
-          <form onSubmit={onSubmit}>  
-            <Typography variant='paragraph' component='p' textAlign='center'>
-              <label>Edit note subject/title</label> <br />
-            </Typography>
-            <TextField 
-              sx={{marginTop:1,backgroundColor:'#6ffbff',width:226}}
-              value={title}
-              onChange = {(e) => setTitle(e.target.value)}
-              required
-              name='title'
-              id="title"
-              label="Required"
-            />
-            <Box sx={{marginTop:2}}>
-              <Typography 
-                variant='paragraph' 
-                component='p' 
-                textAlign='center'>
-              <Box>
-                <label>Edit content of note</label> <br />
-              </Box>
-            <TextField 
-              sx={{marginTop:1, backgroundColor:'#6ffbff', width:226}}
-              required
-              value={content}
-              onChange = {(e) => setContent(e.target.value)}
-              name='content'
-              id="content"
-              label="Required"
-              multiline
-              rows={4}
-              inputProps = {{maxLength: 300}}
-            />
-              </Typography><br />
-            </Box>
-            <Stack direction="row" spacing={2}>
-              <Button 
-                sx={{width:103, height:40, backgroundColor:'#0097b3'}} 
-                variant="contained"  
-                disabled={!title||!content} 
-                startIcon={<EditIcon />} 
-                type='submit' 
-                autoFocus>
-                  Edit
-              </Button>
-              <Button 
-                sx={{width:103, height:40, backgroundColor:'#0097b3'}} 
-                variant="contained" 
-                onClick={handleClose} 
-                startIcon={<CancelIcon />} 
-                type='reset' 
-                autoFocus>
-                  Cancel
-              </Button>
-            </Stack>
-          </form>
+          {children}
         </DialogContent>
       </BootstrapDialog>
     </Grid>
