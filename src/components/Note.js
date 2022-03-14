@@ -6,16 +6,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Typography  from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
-import CustomizedDialogs from '../components/EditModal';
-import EditForm from '../components/EditForm'
 import { useState } from 'react'
 
-const Note = ({note, notes, setNotes}) => {
+const Note = ({note,onEdit,openEditModal,setOpenEditModal}) => {
   const [open, setOpen] = useState(false)
-  const editNote = () => {
-    //const indexNote = notes.finderIndex((note) => note.id === id)
-    console.log('Notes')
-  }
   return (
     <Grid item xs = {4}>
       <Paper elevation={20} sx={{height:180,width:300,backgroundColor:'#9effff'}}>
@@ -29,12 +23,16 @@ const Note = ({note, notes, setNotes}) => {
           }}>
           <Box>
             <Stack direction="row">
-              
-              <CustomizedDialogs open={open} setOpen={setOpen} onClick = {() => editNote}>
-                <EditForm open = {open} setOpen = {setOpen} />
-              </CustomizedDialogs>   
-              
-              <IconButton aria-label="delete" open={open} setOpen={setOpen}>
+              <IconButton onClick={() => onEdit(note.id)} 
+                openEditModal={openEditModal} 
+                setOpenEditModal={setOpenEditModal}  
+                aria-label="edit">
+                <EditIcon />
+              </IconButton>   
+              <IconButton 
+                aria-label="delete" 
+                open={open} 
+                setOpen={setOpen}>
                 <DeleteIcon />
               </IconButton>
             </Stack>
@@ -44,7 +42,10 @@ const Note = ({note, notes, setNotes}) => {
               {note.title}
           </Typography> 
         </Box>
-        <Box marginLeft={1} padding={0.5} sx={{
+        <Box 
+          marginLeft={1} 
+          padding={0.5} 
+          sx={{
           display: "flex",
           alignItems:"center",
           }}> 

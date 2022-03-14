@@ -1,21 +1,13 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import PropTypes from 'prop-types';
-import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
 import { useState } from 'react';
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import CancelIcon from '@mui/icons-material/Cancel';
-import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import EditIcon from '@mui/icons-material/Edit';
 import EditForm from '../components/EditForm'
 
@@ -54,14 +46,14 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function CustomizedDialogs({note, children, open, setOpen}) {
+export default function CustomizedDialogs({editNoteTrue,openEditModal,setOpenEditModal,titleNoteShow,contentNoteShow}) {
   const [titleNote, setTitleNote] = useState("");
   const [contentNote, setContentNote] = useState("");
   const handleClickOpen = () => {
-    setOpen(true);
+    setOpenEditModal(true);
   };
   const handleClose = () => {
-    setOpen(false);
+    setOpenEditModal(false);
     setTitle('');
     setContent('');
   };
@@ -71,29 +63,29 @@ export default function CustomizedDialogs({note, children, open, setOpen}) {
   const handleContentChange = (event) =>{
     setContentNote(event.target.value);
   };
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const onSubmit = (e) => {
-    e.preventDefault()
-    //onAdd({title,content})
-    setTitle('')
-    setContent('')
-  }
+  const [title, setTitle] = useState(titleNoteShow);
+  const [content, setContent] = useState(contentNoteShow);
   return (
     <Grid>
-        <IconButton aria-label="edit" onClick={handleClickOpen}>
-            <EditIcon />
-        </IconButton>
+      <IconButton aria-label="edit" onClick={handleClickOpen}>
+        <EditIcon />
+      </IconButton>
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
-        open={open}
+        open={openEditModal}
       >
         <BootstrapDialogTitle onClose={handleClose}>
           Edit note
         </BootstrapDialogTitle>
         <DialogContent dividers>
-          {children}
+          <EditForm 
+            titleNoteShow={openEditModal.titleNoteShow}
+            contentNoteShow={openEditModal.contentNoteShow}
+            openEditModal={openEditModal} 
+            setOpenEditModal={setOpenEditModal} 
+            editNoteTrue={editNoteTrue}
+          />
         </DialogContent>
       </BootstrapDialog>
     </Grid>

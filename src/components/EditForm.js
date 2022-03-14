@@ -9,7 +9,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Grid from '@mui/material/Grid';
 
-const EditForm = ({open, setOpen,note, notes, setNotes, onEdit}) => {
+const EditForm = ({id,editNoteTrue,setOpenEditModal,titleNoteShow,contentNoteShow}) => {
   const [titleNote, setTitleNote] = useState("");
   const [contentNote, setContentNote] = useState("");
   const handleTitleChange = (event) => {
@@ -18,24 +18,19 @@ const EditForm = ({open, setOpen,note, notes, setNotes, onEdit}) => {
   const handleContentChange = (event) =>{
     setContentNote(event.target.value);
   };
-  const [title, setTitle] = useState();
-  const [content, setContent] = useState();
-  const onSubmit = (e) => {
-    e.preventDefault()
-    onEdit(title, content)
-    setTitle('')
-    setContent('')
-  }
-
+  const [title, setTitle] = useState(titleNoteShow);
+  const [content, setContent] = useState(contentNoteShow);
   return (
     <Grid>
-      <form onSubmit={onSubmit}>  
+      <form>  
         <Typography variant='paragraph' component='p' textAlign='center'>
-          <label>Add a new note subject/title</label> <br />
+          <label>Edit a note subject/title</label> <br />
         </Typography>
         <TextField 
           sx={{marginTop:1,backgroundColor:'#6ffbff',width:226}}
+          defaultValue={titleNoteShow}
           value={title}
+          defaultValue={titleNoteShow}
           onChange = {(e) => setTitle(e.target.value)}
           required
           name='title'
@@ -48,11 +43,12 @@ const EditForm = ({open, setOpen,note, notes, setNotes, onEdit}) => {
             component='p' 
             textAlign='center'>
             <Box>
-              <label>Add content of note</label> <br />
+              <label>Edit content of note</label> <br />
             </Box>
             <TextField 
               sx={{marginTop:1, backgroundColor:'#6ffbff', width:226}}
               required
+              defaultValue={contentNoteShow}
               value={content}
               onChange = {(e) => setContent(e.target.value)}
               name='content'
@@ -67,7 +63,7 @@ const EditForm = ({open, setOpen,note, notes, setNotes, onEdit}) => {
         <Stack direction="row" spacing={2}>
           <Button 
             sx={{width:103, height:40, backgroundColor:'#0097b3'}} 
-            onClick = {()=>setOpen(false)}
+            onClick={() => editNoteTrue(id, title,content)}
             variant="contained"  
             disabled={!title||!content} 
             startIcon={<EditIcon />} 
@@ -76,7 +72,7 @@ const EditForm = ({open, setOpen,note, notes, setNotes, onEdit}) => {
               Edit
           </Button>
           <Button 
-            onClick={() => setOpen(false)}
+            onClick={setOpenEditModal}
             sx={{width:103, height:40, backgroundColor:'#0097b3'}} 
             variant="contained"
             startIcon={<CancelIcon />} 
