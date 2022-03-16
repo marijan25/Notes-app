@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -8,16 +7,49 @@ import Stack from '@mui/material/Stack';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Grid from '@mui/material/Grid';
+import { styled } from '@mui/material/styles';
+import Dialog from '@mui/material/Dialog';
+import PropTypes from 'prop-types';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import DialogTitle from '@mui/material/DialogTitle';
 
-const AddForm = ({onAdd, setOpen}) => {
-  const [titleNote, setTitleNote] = useState("");
-  const [contentNote, setContentNote] = useState("");
-  const handleTitleChange = (event) => {
-    setTitleNote(event.target.value);
-  };
-  const handleContentChange = (event) =>{
-    setContentNote(event.target.value);
-  };
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  '& .MuiDialogContent-root': {
+    padding: theme.spacing(2)
+  },
+  '& .MuiDialogActions-root': {
+    padding: theme.spacing(1),
+  },
+}));
+const BootstrapDialogTitle = (props) => {
+  const { children, onClose, ...other } = props;
+  return (
+    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+      {children}
+      {onClose ? (
+        <IconButton
+          aria-label="close"
+          onClick={onClose}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </DialogTitle>
+  );
+};
+BootstrapDialogTitle.propTypes = {
+  children: PropTypes.node,
+  onClose: PropTypes.func.isRequired,
+};  
+const AddForm = ({onAdd,open, setOpen}) => {
+
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const onSubmit = (e) => {
@@ -28,6 +60,14 @@ const AddForm = ({onAdd, setOpen}) => {
   }
   return (
     <Grid>
+      <BootstrapDialog
+        onClose={() => setOpen(false)}
+        aria-labelledby="customized-dialog-title"
+        open = {open}
+      >
+       <BootstrapDialogTitle onClose={() => setOpen(false)}>
+          Add new note
+        </BootstrapDialogTitle>
       <form onSubmit={onSubmit}>  
         <Typography variant='paragraph' component='p' textAlign='center'>
           <label>Add a new note subject/title</label> <br />
@@ -83,7 +123,8 @@ const AddForm = ({onAdd, setOpen}) => {
           </Button>
         </Stack>
       </form>
-    </Grid>
+      </BootstrapDialog>
+  </Grid>
   )
 }
 
