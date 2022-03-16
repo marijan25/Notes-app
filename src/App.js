@@ -38,8 +38,6 @@ const data = [
 
 function App() {
   const [notes, setNotes] = useState(data)
-
-  
   const [open, setOpen] = useState(false);
   const addNote = (note) => {
     const id=Math.floor(Math.random()*10000) + 1
@@ -52,7 +50,7 @@ function App() {
         sx={{ position:'fixed',bottom:0,left:0,right:0 }} 
         elevation={3}>
         <BottomNavigation>
-          <CustomizedDialogs 
+          <CustomizedDialogs
             open={open} 
             setOpen = {setOpen}>
             <AddForm 

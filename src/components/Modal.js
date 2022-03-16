@@ -1,9 +1,8 @@
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
-import DialogContent from '@mui/material/DialogContent';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 
-export default function CustomizedDialogs({children,open,setOpen}) {
+export default function CustomizedDialogs({children,setOpen}) {
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -19,11 +18,7 @@ export default function CustomizedDialogs({children,open,setOpen}) {
         startIcon={<NoteAddIcon />}>
           Add New Note
       </Button>
-        <DialogContent dividers>
-          {children}
-        </DialogContent>
-      
+        {children}
     </Grid>
   );
 }
-

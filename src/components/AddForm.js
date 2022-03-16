@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -48,13 +49,13 @@ BootstrapDialogTitle.propTypes = {
   children: PropTypes.node,
   onClose: PropTypes.func.isRequired,
 };  
-const AddForm = ({onAdd,open, setOpen}) => {
-
+const AddForm = ({onAdd,open,setOpen}) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const onSubmit = (e) => {
     e.preventDefault()
     onAdd({title,content})
+    setOpen(false)
     setTitle('')
     setContent('')
   }
@@ -65,66 +66,68 @@ const AddForm = ({onAdd,open, setOpen}) => {
         aria-labelledby="customized-dialog-title"
         open = {open}
       >
-       <BootstrapDialogTitle onClose={() => setOpen(false)}>
+        <BootstrapDialogTitle onClose={() => setOpen(false)}>
           Add new note
         </BootstrapDialogTitle>
-      <form onSubmit={onSubmit}>  
-        <Typography variant='paragraph' component='p' textAlign='center'>
-          <label>Add a new note subject/title</label> <br />
-        </Typography>
-        <TextField 
-          sx={{marginTop:1,backgroundColor:'#6ffbff',width:226}}
-          value={title}
-          onChange = {(e) => setTitle(e.target.value)}
-          required
-          name='title'
-          id="title"
-          label="Required"
-        />
-        <Box sx={{marginTop:2}}>
-          <Typography 
-            variant='paragraph' 
-            component='p' 
-            textAlign='center'>
-            <Box>
-              <label>Add content of note</label> <br />
-            </Box>
+        <form onSubmit={onSubmit}> 
+          <DialogContent dividers>
+            <Typography variant='paragraph' component='p' textAlign='center'>
+              <label>Add a new note subject/title</label> <br />
+            </Typography>
             <TextField 
-              sx={{marginTop:1, backgroundColor:'#6ffbff', width:226}}
+              sx={{marginTop:1,backgroundColor:'#6ffbff',width:226}}
+              value={title}
+              onChange = {(e) => setTitle(e.target.value)}
               required
-              value={content}
-              onChange = {(e) => setContent(e.target.value)}
-              name='content'
-              id="content"
+              name='title'
+              id="title"
               label="Required"
-              multiline
-              rows={4}
-              inputProps = {{maxLength: 300}}
             />
-          </Typography><br />
-        </Box>
-        <Stack direction="row" spacing={2}>
-          <Button 
-            sx={{width:103, height:40, backgroundColor:'#0097b3'}} 
-            variant="contained"  
-            disabled={!title||!content} 
-            startIcon={<AddCircleIcon />} 
-            type='submit' 
-            autoFocus>
-              Add
-          </Button>
-          <Button 
-            onClick={() => setOpen(false)}
-            sx={{width:103, height:40, backgroundColor:'#0097b3'}} 
-            variant="contained"
-            startIcon={<CancelIcon />} 
-            autoFocus>
-              Cancel
-          </Button>
-        </Stack>
-      </form>
+            <Box sx={{marginTop:2}}>
+              <Typography 
+                variant='paragraph' 
+                component='p' 
+                textAlign='center'>
+                <Box>
+                  <label>Add content of note</label> <br />
+                </Box>
+                <TextField 
+                  sx={{marginTop:1, backgroundColor:'#6ffbff', width:226}}
+                  required
+                  value={content}
+                  onChange = {(e) => setContent(e.target.value)}
+                  name='content'
+                  id="content"
+                  label="Required"
+                  multiline
+                  rows={4}
+                  inputProps = {{maxLength: 300}}
+                />
+               </Typography><br />
+            </Box>
+            <Stack direction="row" spacing={2.5}>
+              <Button 
+                sx={{width:103, height:40, backgroundColor:'#0097b3'}} 
+                variant="contained"  
+                disabled={!title||!content} 
+                startIcon={<AddCircleIcon />} 
+                type='submit' 
+                autoFocus>
+                  Add
+              </Button>
+              <Button 
+                onClick={() => setOpen(false)}
+                sx={{width:103, height:40, backgroundColor:'#0097b3'}} 
+                variant="contained"
+                startIcon={<CancelIcon />} 
+                autoFocus>
+                  Cancel
+              </Button>
+            </Stack>
+          </DialogContent> 
+        </form>
       </BootstrapDialog>
-  </Grid>
+    </Grid>
   )
 }
 
