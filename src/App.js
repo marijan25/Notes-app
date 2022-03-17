@@ -1,12 +1,13 @@
 import CustomizedDialogs from './components/Modal';
 import Grid from '@mui/material/Grid';
 import Note from './components/Note';
-import { Container } from '@mui/material';
+import { Container, Modal } from '@mui/material';
 import Heading from './components/Heading';
 import Paper from '@mui/material/Paper'
 import BottomNavigation from '@mui/material/BottomNavigation';
 import { useState } from 'react';
 import AddForm from './components/AddForm';
+
 
 const data = [
   {
@@ -39,10 +40,56 @@ const data = [
 function App() {
   const [notes, setNotes] = useState(data)
   const [open, setOpen] = useState(false);
+  const [newId, setNewId] = useState()
+
   const addNote = (note) => {
-    const id=Math.floor(Math.random()*10000) + 1
-    const newNote = {id, ...note}
+    const newId=Math.floor(Math.random()*10000) + 1
+    setNewId(newId)
+    const newNote = {newId, ...note}
     setNotes([...notes, newNote])
+    setFormData(...notes, newNote)
+  }
+
+  const [formData, setFormData] = useState({
+    id: newId,
+    title: "",
+    content: ""
+  })
+
+
+  const [indexEditNote, setIndexEditNote] = useState(-1)
+  const [openEditModal, setOpenEditModal] = useState({
+    show: false,
+    id: null,
+    titleNoteShow: "",
+    contentNoteShow: ""
+  });
+
+  const handleEditDialog = (show,id,titleNoteShow,contentNoteShow) => {
+    setOpenEditModal({
+      show,
+      id,
+      titleNoteShow,
+      contentNoteShow
+    })
+  }
+  const editNote = (id) => {
+    const indexEditNote = notes.findIndex((note) => note.id === id)
+    setIndexEditNote(indexEditNote)
+    handleEditDialog(true, id, notes[indexEditNote].title, notes[indexEditNote].content)
+  }
+  const editNoteTrue = (id, title, content, titleNoteShow, contentNoteShow) => {
+    if(openEditModal.show && openEditModal.id){
+      notes[indexEditNote].title = title;
+      notes[indexEditNote].content = content;
+      setNotes(notes)   
+      setOpenEditModal({
+        show: false,
+        id,
+        titleNoteShow,
+        contentNoteShow
+      })
+    }
   }
   return (
     <Grid>
@@ -63,9 +110,17 @@ function App() {
       <Heading />
       <Container sx={{marginTop:5, marginBottom:12}}>    
         <Grid container spacing={5}>   
-          {notes.map((note) => <Note note={note} key={note.id} />)}  
+          {notes.map((note) => <Note onEdit={editNote} note={note} key={note.id} />)}  
         </Grid>
-      </Container>   
+      </Container>  
+      {openEditModal.show && <Modal 
+        titleNoteShow={openEditModal.titleNoteShow}
+        contentNoteShow={openEditModal.contentNoteShow}
+        openEditModal={openEditModal} 
+        setOpenEditModal={setOpenEditModal} 
+        editNoteTrue={editNoteTrue}
+      />}
+ 
     </Grid>
   );
 }

@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 
-const Note = ({note}) => {
+const Note = ({note, onEdit, setOpen, openEditModal,setOpenEditModal,editNoteTrue,titleNoteShow,contentNoteShow}) => {
   return (
     <Grid item xs = {4}>
       <Paper elevation={20} sx={{height:180,width:300,backgroundColor:'#9effff'}}>
@@ -23,7 +23,12 @@ const Note = ({note}) => {
           }}>
           <Box>
             <Stack direction="row">
-              <IconButton aria-label="edit">
+              <IconButton aria-label="edit"
+                onClick={openEditModal}
+                openEditModal={openEditModal} 
+        setOpenEditModal={setOpenEditModal} 
+        editNoteTrue={editNoteTrue}
+              >
                 <EditIcon />
               </IconButton>
               <IconButton aria-label="delete">

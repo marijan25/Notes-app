@@ -2,7 +2,7 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 
-export default function CustomizedDialogs({children,setOpen}) {
+export default function CustomizedDialogs({children,setOpen, openAddModal, setOpenAddModal}) {
   const handleClickOpen = () => {
     setOpen(true);
   };

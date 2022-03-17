@@ -14,6 +14,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
+import { AddCommentOutlined, Notes } from '@mui/icons-material';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -52,13 +53,29 @@ BootstrapDialogTitle.propTypes = {
 const AddForm = ({onAdd,open,setOpen}) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const onSubmit = (e) => {
-    e.preventDefault()
-    onAdd({title,content})
-    setOpen(false)
-    setTitle('')
-    setContent('')
+  //const onSubmit = (e) => {
+   // e.preventDefault()
+   // onAdd({title,content})
+   // setOpen(false)
+   // setTitle('')
+   // setContent('')
+  //}
+
+  const onSubmit = (e, formData) => {
+    if(formData == null){
+      e.preventDefault()
+      onAdd({title, content})
+      setOpen(false)
+      setTitle('')
+      setContent('')
+    }
+    else{}
   }
+  
+
+    
+  
+
   return (
     <Grid>
       <BootstrapDialog
