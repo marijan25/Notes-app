@@ -14,7 +14,6 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
-import { AddCommentOutlined, Notes } from '@mui/icons-material';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -24,15 +23,18 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     padding: theme.spacing(1),
   },
 }));
-const BootstrapDialogTitle = (props) => {
-  const { children, onClose, ...other } = props;
+const BootstrapDialogTitle = ({ children, onClose, setNewForm, setIndexEditNote, ...other }) => {
   return (
     <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-      {children}
+      {children}  
       {onClose ? (
         <IconButton
           aria-label="close"
-          onClick={onClose}
+          onClick={() => {
+            onClose();
+            setNewForm({});
+            setIndexEditNote(-1);
+          }}
           sx={{
             position: 'absolute',
             right: 8,
@@ -50,50 +52,47 @@ BootstrapDialogTitle.propTypes = {
   children: PropTypes.node,
   onClose: PropTypes.func.isRequired,
 };  
-const AddForm = ({onAdd,open,setOpen}) => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  //const onSubmit = (e) => {
-   // e.preventDefault()
-   // onAdd({title,content})
-   // setOpen(false)
-   // setTitle('')
-   // setContent('')
-  //}
-
-  const onSubmit = (e, formData) => {
-    if(formData == null){
+const Form = ({onAdd,onEdit,id, setIndexEditNote,newForm, open,setOpen,indexEditNote, setNewForm}) => {
+  const [title, setTitle] = useState(newForm.title)
+  const [content, setContent] = useState(newForm.content)
+  const onSubmit = (e) => {
+    if(indexEditNote > -1){
       e.preventDefault()
-      onAdd({title, content})
+      onEdit(id, title, content)
+      setTitle('')
+      setContent('')
+      }
+    else{
+      e.preventDefault()
+      onAdd({title,content})
       setOpen(false)
       setTitle('')
       setContent('')
     }
-    else{}
+    setIndexEditNote(-1)
   }
-  
-
-    
-  
-
   return (
     <Grid>
       <BootstrapDialog
-        onClose={() => setOpen(false)}
+        setNewForm = {setNewForm} 
+        setIndexEditNote = {setIndexEditNote}
         aria-labelledby="customized-dialog-title"
         open = {open}
       >
-        <BootstrapDialogTitle onClose={() => setOpen(false)}>
-          Add new note
+        <BootstrapDialogTitle 
+        setNewForm = {setNewForm} 
+        setIndexEditNote = {setIndexEditNote}
+        onClose={() => setOpen(false)}>
+          {indexEditNote > -1 ? 'Edit note' : 'Add new note'}
         </BootstrapDialogTitle>
         <form onSubmit={onSubmit}> 
           <DialogContent dividers>
             <Typography variant='paragraph' component='p' textAlign='center'>
-              <label>Add a new note subject/title</label> <br />
+              {indexEditNote > -1 ? 'Edit a note subject/title' : 'Add a new note subject/title'} <br />
             </Typography>
             <TextField 
               sx={{marginTop:1,backgroundColor:'#6ffbff',width:226}}
-              value={title}
+              defaultValue={newForm.title}
               onChange = {(e) => setTitle(e.target.value)}
               required
               name='title'
@@ -106,12 +105,12 @@ const AddForm = ({onAdd,open,setOpen}) => {
                 component='p' 
                 textAlign='center'>
                 <Box>
-                  <label>Add content of note</label> <br />
+                  {indexEditNote > -1 ? 'Edit content of note' : 'Add content of note'}<br />
                 </Box>
                 <TextField 
                   sx={{marginTop:1, backgroundColor:'#6ffbff', width:226}}
                   required
-                  value={content}
+                  defaultValue={newForm.content}
                   onChange = {(e) => setContent(e.target.value)}
                   name='content'
                   id="content"
@@ -130,14 +129,19 @@ const AddForm = ({onAdd,open,setOpen}) => {
                 startIcon={<AddCircleIcon />} 
                 type='submit' 
                 autoFocus>
-                  Add
+                  {indexEditNote > -1 ? 'Edit' : 'Add'}
               </Button>
               <Button 
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  setOpen(false);
+                  setNewForm({});
+                  setIndexEditNote(-1)
+                }}
                 sx={{width:103, height:40, backgroundColor:'#0097b3'}} 
                 variant="contained"
                 startIcon={<CancelIcon />} 
-                autoFocus>
+                autoFocus
+                >
                   Cancel
               </Button>
             </Stack>
@@ -148,4 +152,4 @@ const AddForm = ({onAdd,open,setOpen}) => {
   )
 }
 
-export default AddForm
+export default Form

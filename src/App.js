@@ -6,8 +6,7 @@ import Heading from './components/Heading';
 import Paper from '@mui/material/Paper'
 import BottomNavigation from '@mui/material/BottomNavigation';
 import { useState } from 'react';
-import AddForm from './components/AddForm';
-
+import Form from './components/Form';
 
 const data = [
   {
@@ -36,60 +35,29 @@ const data = [
     content: "When a user clicks on delete button, confirmation modal should be displayed with a question Delete note title* ?"
   }
 ]
-
 function App() {
   const [notes, setNotes] = useState(data)
-  const [open, setOpen] = useState(false);
-  const [newId, setNewId] = useState()
-
+  const [open, setOpen] = useState(false)
+  const [newForm, setNewForm] = useState({});
+  const [indexEditNote, setIndexEditNote] = useState(-1) 
   const addNote = (note) => {
-    const newId=Math.floor(Math.random()*10000) + 1
-    setNewId(newId)
-    const newNote = {newId, ...note}
+    const id=Math.floor(Math.random()*10000) + 1
+    const newNote = {id, ...note}
     setNotes([...notes, newNote])
-    setFormData(...notes, newNote)
+    setOpen(false)
   }
-
-  const [formData, setFormData] = useState({
-    id: newId,
-    title: "",
-    content: ""
-  })
-
-
-  const [indexEditNote, setIndexEditNote] = useState(-1)
-  const [openEditModal, setOpenEditModal] = useState({
-    show: false,
-    id: null,
-    titleNoteShow: "",
-    contentNoteShow: ""
-  });
-
-  const handleEditDialog = (show,id,titleNoteShow,contentNoteShow) => {
-    setOpenEditModal({
-      show,
-      id,
-      titleNoteShow,
-      contentNoteShow
-    })
-  }
-  const editNote = (id) => {
+  const openEditModal = (id) => {
     const indexEditNote = notes.findIndex((note) => note.id === id)
     setIndexEditNote(indexEditNote)
-    handleEditDialog(true, id, notes[indexEditNote].title, notes[indexEditNote].content)
+    setNewForm(notes[indexEditNote])
+    setOpen(true)
   }
-  const editNoteTrue = (id, title, content, titleNoteShow, contentNoteShow) => {
-    if(openEditModal.show && openEditModal.id){
-      notes[indexEditNote].title = title;
-      notes[indexEditNote].content = content;
-      setNotes(notes)   
-      setOpenEditModal({
-        show: false,
-        id,
-        titleNoteShow,
-        contentNoteShow
-      })
-    }
+  const editNote = (id,title, content) => {
+    notes[indexEditNote].title = title;
+    notes[indexEditNote].content = content;
+    setNotes(notes)
+    setNewForm({})
+    setOpen(false)
   }
   return (
     <Grid>
@@ -99,28 +67,32 @@ function App() {
         <BottomNavigation>
           <CustomizedDialogs
             open={open} 
-            setOpen = {setOpen}>
-            <AddForm 
+            setOpen = {setOpen}
+            >
+            <Form 
               onAdd = {addNote} 
+              onEdit = {editNote}
               open={open} 
-              setOpen = {setOpen}/>
+              setOpen = {setOpen}
+              indexEditNote={indexEditNote}
+              setIndexEditNote = {setIndexEditNote}
+              openEditModal = {openEditModal}
+              newForm = {newForm}
+              setNewForm = {setNewForm}
+              />      
           </CustomizedDialogs>
         </BottomNavigation > 
       </Paper>  
       <Heading />
       <Container sx={{marginTop:5, marginBottom:12}}>    
         <Grid container spacing={5}>   
-          {notes.map((note) => <Note onEdit={editNote} note={note} key={note.id} />)}  
+          {notes.map((note) => <Note 
+          note={note} 
+          key={note.id} 
+          openEditModal={openEditModal} 
+          />)}  
         </Grid>
-      </Container>  
-      {openEditModal.show && <Modal 
-        titleNoteShow={openEditModal.titleNoteShow}
-        contentNoteShow={openEditModal.contentNoteShow}
-        openEditModal={openEditModal} 
-        setOpenEditModal={setOpenEditModal} 
-        editNoteTrue={editNoteTrue}
-      />}
- 
+      </Container>   
     </Grid>
   );
 }
