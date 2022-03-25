@@ -1,12 +1,12 @@
-import CustomizedDialogs from './components/Modal';
+import CustomizedDialogs from './components/OpenModal';
 import Grid from '@mui/material/Grid';
 import Note from './components/Note';
-import { Container, Modal } from '@mui/material';
+import { Container } from '@mui/material';
 import Heading from './components/Heading';
 import Paper from '@mui/material/Paper'
 import BottomNavigation from '@mui/material/BottomNavigation';
 import { useState } from 'react';
-import Form from './components/Form';
+import Modal from './components/Modal';
 
 const data = [
   {
@@ -69,14 +69,13 @@ function App() {
             open={open} 
             setOpen = {setOpen}
             >
-            <Form 
+            <Modal 
               onAdd = {addNote} 
               onEdit = {editNote}
               open={open} 
               setOpen = {setOpen}
               indexEditNote={indexEditNote}
               setIndexEditNote = {setIndexEditNote}
-              openEditModal = {openEditModal}
               newForm = {newForm}
               setNewForm = {setNewForm}
               />      
