@@ -21,7 +21,7 @@ const AddEditForm = ({onAdd,onEdit,id, setIndexEditNote,newForm,setOpen,indexEdi
       }
     else{
       e.preventDefault()
-      onAdd({title,content})
+      onAdd({id,title,content})
       setOpen(false)
       setTitle('')
       setContent('')

@@ -7,6 +7,7 @@ import Typography  from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
+import { NoEncryption } from '@mui/icons-material';
 
 const Note = ({note,openEditModal}) => {
   return (
@@ -41,15 +42,15 @@ const Note = ({note,openEditModal}) => {
               {note.title}
           </Typography>
         </Box> 
-        <Box sx={{display: "flex",height:140, width:298}}> 
+        <Box sx={{display: "flex",height:170, width:298}}> 
           <Typography 
             variant='p' 
             component='paragraph' 
             sx={{height:140, width:298}} >
             <TextareaAutosize
               style={{maxHeight:138,
-              maxWidth:295, minHeight:138,
-              minWidth:295,
+              maxWidth:295, maxHeight:136,
+              minWidth:295, minHeight:136,
               backgroundColor:'#9effff', color:'black', fontFamily:'arial', fontSize:14}} 
               multiline
               rows={6}

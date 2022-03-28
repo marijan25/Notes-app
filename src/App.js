@@ -7,6 +7,7 @@ import Paper from '@mui/material/Paper'
 import BottomNavigation from '@mui/material/BottomNavigation';
 import { useState } from 'react';
 import Modal from './components/Modal';
+import { SettingsOutlined } from '@mui/icons-material';
 
 const data = [
   {
@@ -44,7 +45,6 @@ function App() {
     const id=Math.floor(Math.random()*10000) + 1
     const newNote = {id, ...note}
     setNotes([...notes, newNote])
-    setOpen(false)
   }
   const openEditModal = (id) => {
     const indexEditNote = notes.findIndex((note) => note.id === id)
@@ -52,7 +52,7 @@ function App() {
     setNewForm(notes[indexEditNote])
     setOpen(true)
   }
-  const editNote = (id,title, content) => {
+  const editNote = (id,title, content,dates) => {
     notes[indexEditNote].title = title;
     notes[indexEditNote].content = content;
     setNotes(notes)
