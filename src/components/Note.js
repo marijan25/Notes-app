@@ -25,7 +25,7 @@ const Note = ({note,openEditModal}) => {
           <Box>
             <Stack direction="row">
               <IconButton 
-                onClick={() => openEditModal(note.id, note.title, note.content)} 
+                onClick={() => openEditModal(note.id, note.title, note.content, note.date)} 
               >
                 <EditIcon/>
               </IconButton>
@@ -49,14 +49,21 @@ const Note = ({note,openEditModal}) => {
             sx={{height:140, width:298}} >
             <TextareaAutosize
               style={{maxHeight:138,
-              maxWidth:295, maxHeight:136,
-              minWidth:295, minHeight:136,
+              maxWidth:295, maxHeight:98,
+              minWidth:295, minHeight:98,
               backgroundColor:'#9effff', color:'black', fontFamily:'arial', fontSize:14}} 
               multiline
               rows={6}
               value={note.content}
               disabled
             />
+            <Typography 
+            variant='h6' 
+            component='h3' 
+            textAlign={"center"} 
+            color={'white'} sx={{backgroundColor:'#9effff', color:'black', textAlign:'left', marginLeft:1}}>
+             Date: {note.date}
+            </Typography>
           </Typography>
         </Box>
       </Paper>
