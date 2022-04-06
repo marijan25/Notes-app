@@ -7,7 +7,6 @@ import Paper from '@mui/material/Paper'
 import BottomNavigation from '@mui/material/BottomNavigation';
 import { useState } from 'react';
 import Modal from './components/Modal';
-import { SettingsOutlined } from '@mui/icons-material';
 
 const data = [
   {
@@ -45,7 +44,7 @@ function App() {
   const [notes, setNotes] = useState(data)
   const [open, setOpen] = useState(false)
   const [newForm, setNewForm] = useState({});
-  const [indexEditNote, setIndexEditNote] = useState(-1) 
+  const [idEditNote, setIdEditNote] = useState()
   const current = new Date()
   const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
   const addNote = (note) => {
@@ -57,17 +56,18 @@ function App() {
     }
     setNotes([...notes,newNote])
     setOpen(false)
+    setNewForm({})
   }
   const openEditModal = (id) => {
-    const indexEditNote = notes.findIndex((note) => note.id === id)
-    setIndexEditNote(indexEditNote)
-    setNewForm(notes[indexEditNote])
+    const idEditNote = notes.find(function(note) {if(note.id === id) return true})
+    setIdEditNote(idEditNote)
+    setNewForm(idEditNote)
     setOpen(true)
   }
   const editNote = (id,title, content) => {
-    notes[indexEditNote].title = title;
-    notes[indexEditNote].content = content;
-    notes[indexEditNote].date = date
+    idEditNote.title = title;
+    idEditNote.content = content;
+    idEditNote.date = date
     setNotes(notes)
     setNewForm({})
     setOpen(false)
@@ -87,8 +87,8 @@ function App() {
               onEdit = {editNote}
               open={open} 
               setOpen = {setOpen}
-              indexEditNote={indexEditNote}
-              setIndexEditNote = {setIndexEditNote}
+              idEditNote={idEditNote}
+              setIdEditNote = {setIdEditNote}
               newForm = {newForm}
               setNewForm = {setNewForm}
               />      

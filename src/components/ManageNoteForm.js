@@ -9,31 +9,31 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Grid from '@mui/material/Grid';
 import DialogContent from '@mui/material/DialogContent';
 
-const AddEditForm = ({onAdd,onEdit,id, setIndexEditNote,newForm,setOpen,indexEditNote, setNewForm}) => {
+const AddEditForm = ({onAdd,onEdit,id,setIdEditNote,newForm,setOpen,setNewForm}) => {
   const [title, setTitle] = useState(newForm.title)
   const [content, setContent] = useState(newForm.content)
   const onSubmit = (e) => {
-    if(indexEditNote > -1){
+    if(newForm.id){
       e.preventDefault()
       onEdit(id, title, content)
       setTitle('')
       setContent('')
-      }
+    }
     else{
       e.preventDefault()
-      onAdd({id,title,content})
+      onAdd({title,content})
       setOpen(false)
       setTitle('')
       setContent('')
     }
-    setIndexEditNote(-1)
+    setIdEditNote()
   }
   return (
     <Grid>
       <form onSubmit={onSubmit}> 
           <DialogContent dividers>
             <Typography variant='paragraph' component='p' textAlign='center'>
-              {indexEditNote > -1 ? 'Edit a note subject/title' : 'Add a new note subject/title'} <br />
+              {newForm.id ? 'Edit a note subject/title' : 'Add a new note subject/title'} <br />
             </Typography>
             <TextField 
               sx={{marginTop:1,backgroundColor:'#6ffbff',width:226}}
@@ -50,7 +50,7 @@ const AddEditForm = ({onAdd,onEdit,id, setIndexEditNote,newForm,setOpen,indexEdi
                 component='p' 
                 textAlign='center'>
                 <Box>
-                  {indexEditNote > -1 ? 'Edit content of note' : 'Add content of note'}<br />
+                  {newForm.id ? 'Edit content of note' : 'Add content of note'}<br />
                 </Box>
                 <TextField 
                   sx={{marginTop:1, backgroundColor:'#6ffbff', width:226}}
@@ -74,13 +74,13 @@ const AddEditForm = ({onAdd,onEdit,id, setIndexEditNote,newForm,setOpen,indexEdi
                 startIcon={<AddCircleIcon />} 
                 type='submit' 
                 autoFocus>
-                  {indexEditNote > -1 ? 'Edit' : 'Add'}
+                  {newForm.id ? 'Edit' : 'Add'}
               </Button>
               <Button 
                 onClick={() => {
                   setOpen(false);
                   setNewForm({});
-                  setIndexEditNote(-1)
+                  setIdEditNote()
                 }}
                 sx={{width:103, height:40, backgroundColor:'#0097b3'}} 
                 variant="contained"

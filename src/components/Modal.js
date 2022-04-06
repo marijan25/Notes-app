@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import DialogTitle from '@mui/material/DialogTitle';
-import AddEditForm from '../components/AddEditForm'
+import AddEditForm from './ManageNoteForm'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -15,7 +15,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     padding: theme.spacing(1),
   },
 }));
-const BootstrapDialogTitle = ({ children, onClose, setNewForm, setIndexEditNote, ...other }) => {
+const BootstrapDialogTitle = ({ children, onClose, setNewForm, setIdEditNote, ...other }) => {
   return (
     <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
       {children}  
@@ -25,7 +25,7 @@ const BootstrapDialogTitle = ({ children, onClose, setNewForm, setIndexEditNote,
           onClick={() => {
             onClose();
             setNewForm({});
-            setIndexEditNote(-1);
+            setIdEditNote();
           }}
           sx={{
             position: 'absolute',
@@ -44,26 +44,26 @@ BootstrapDialogTitle.propTypes = {
   children: PropTypes.node,
   onClose: PropTypes.func.isRequired,
 };  
-const Modal = ({onAdd,onEdit,setIndexEditNote,newForm, open,setOpen,indexEditNote, setNewForm}) => {
+const Modal = ({onAdd,onEdit,setIdEditNote,newForm, open,setOpen,idEditNote, setNewForm}) => {
   return (
     <Grid>
       <BootstrapDialog
         setNewForm = {setNewForm} 
-        setIndexEditNote = {setIndexEditNote}
+        setIdEditNote = {setIdEditNote}
         aria-labelledby="customized-dialog-title"
         open = {open}
       >
         <BootstrapDialogTitle 
         setNewForm = {setNewForm} 
-        setIndexEditNote = {setIndexEditNote}
+        setIdEditNote = {setIdEditNote}
         onClose={() => setOpen(false)}>
-          {indexEditNote > -1 ? 'Edit note' : 'Add new note'}
+          {newForm.id ? 'Edit note' : 'Add new note'}
         </BootstrapDialogTitle>
           <AddEditForm 
-            setIndexEditNote={setIndexEditNote}
+            setIdEditNote={setIdEditNote}
             newForm = {newForm}
             setOpen = {setOpen}
-            indexEditNote = {indexEditNote}
+            idEditNote = {idEditNote}
             setNewForm = {setNewForm}
             onAdd = {onAdd}
             onEdit = {onEdit}
