@@ -7,7 +7,6 @@ import Typography  from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
-import { NoEncryption } from '@mui/icons-material';
 
 const Note = ({note,openEditModal}) => {
   return (
@@ -25,7 +24,7 @@ const Note = ({note,openEditModal}) => {
           <Box>
             <Stack direction="row">
               <IconButton 
-                onClick={() => openEditModal(note.id, note.title, note.content, note.date)} 
+                onClick={() => openEditModal(note.id)}
               >
                 <EditIcon/>
               </IconButton>
@@ -48,7 +47,7 @@ const Note = ({note,openEditModal}) => {
             component='paragraph' 
             sx={{height:140, width:298}} >
             <TextareaAutosize
-              style={{maxHeight:138,
+              style={{
               maxWidth:295, maxHeight:98,
               minWidth:295, minHeight:98,
               backgroundColor:'#9effff', color:'black', fontFamily:'arial', fontSize:14}} 

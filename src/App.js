@@ -44,9 +44,12 @@ function App() {
   const [notes, setNotes] = useState(data)
   const [open, setOpen] = useState(false)
   const [newForm, setNewForm] = useState({});
-  const [idEditNote, setIdEditNote] = useState()
   const current = new Date()
   const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+  const onCloseModal = () => {
+    setOpen(false)
+    setNewForm({})
+  }
   const addNote = (note) => {
     const id=Math.floor(Math.random()*10000) + 1
     const newNote = {
@@ -55,22 +58,18 @@ function App() {
       ...note
     }
     setNotes([...notes,newNote])
-    setOpen(false)
-    setNewForm({})
+    onCloseModal()
   }
   const openEditModal = (id) => {
-    const idEditNote = notes.find(function(note) {if(note.id === id) return true})
-    setIdEditNote(idEditNote)
-    setNewForm(idEditNote)
+    setNewForm(notes.find((note) => note.id === id))
     setOpen(true)
   }
-  const editNote = (id,title, content) => {
-    idEditNote.title = title;
-    idEditNote.content = content;
-    idEditNote.date = date
+  const editNote = (title, content) => {
+    newForm.title = title;
+    newForm.content = content;
+    newForm.date = date
     setNotes(notes)
-    setNewForm({})
-    setOpen(false)
+    onCloseModal()
   }
   return (
     <Grid>
@@ -86,11 +85,8 @@ function App() {
               onAdd = {addNote} 
               onEdit = {editNote}
               open={open} 
-              setOpen = {setOpen}
-              idEditNote={idEditNote}
-              setIdEditNote = {setIdEditNote}
               newForm = {newForm}
-              setNewForm = {setNewForm}
+              onCloseModal = {onCloseModal}
               />      
           </CustomizedDialogs>
         </BottomNavigation > 

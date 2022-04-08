@@ -9,24 +9,19 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Grid from '@mui/material/Grid';
 import DialogContent from '@mui/material/DialogContent';
 
-const AddEditForm = ({onAdd,onEdit,id,setIdEditNote,newForm,setOpen,setNewForm}) => {
+const ManageNoteForm = ({onAdd,onEdit,newForm,onCloseModal}) => {
   const [title, setTitle] = useState(newForm.title)
   const [content, setContent] = useState(newForm.content)
   const onSubmit = (e) => {
+    e.preventDefault();
+    setTitle('');
+    setContent('');
     if(newForm.id){
-      e.preventDefault()
-      onEdit(id, title, content)
-      setTitle('')
-      setContent('')
+      onEdit(title, content)
     }
     else{
-      e.preventDefault()
       onAdd({title,content})
-      setOpen(false)
-      setTitle('')
-      setContent('')
     }
-    setIdEditNote()
   }
   return (
     <Grid>
@@ -77,11 +72,7 @@ const AddEditForm = ({onAdd,onEdit,id,setIdEditNote,newForm,setOpen,setNewForm})
                   {newForm.id ? 'Edit' : 'Add'}
               </Button>
               <Button 
-                onClick={() => {
-                  setOpen(false);
-                  setNewForm({});
-                  setIdEditNote()
-                }}
+                onClick={() => onCloseModal()}
                 sx={{width:103, height:40, backgroundColor:'#0097b3'}} 
                 variant="contained"
                 startIcon={<CancelIcon />} 
@@ -96,4 +87,4 @@ const AddEditForm = ({onAdd,onEdit,id,setIdEditNote,newForm,setOpen,setNewForm})
   )
 }
 
-export default AddEditForm
+export default ManageNoteForm

@@ -1,11 +1,8 @@
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
-import PropTypes from 'prop-types';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import DialogTitle from '@mui/material/DialogTitle';
-import AddEditForm from './ManageNoteForm'
+import ManageNoteForm from './ManageNoteForm';
+import BootstrapDialogTitle from '../components/BootstrapDialogTitle';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -15,59 +12,24 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     padding: theme.spacing(1),
   },
 }));
-const BootstrapDialogTitle = ({ children, onClose, setNewForm, setIdEditNote, ...other }) => {
-  return (
-    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-      {children}  
-      {onClose ? (
-        <IconButton
-          aria-label="close"
-          onClick={() => {
-            onClose();
-            setNewForm({});
-            setIdEditNote();
-          }}
-          sx={{
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-      ) : null}
-    </DialogTitle>
-  );
-};
-BootstrapDialogTitle.propTypes = {
-  children: PropTypes.node,
-  onClose: PropTypes.func.isRequired,
-};  
-const Modal = ({onAdd,onEdit,setIdEditNote,newForm, open,setOpen,idEditNote, setNewForm}) => {
+
+const Modal = ({onAdd,onEdit,newForm,open,onCloseModal}) => {
   return (
     <Grid>
-      <BootstrapDialog
-        setNewForm = {setNewForm} 
-        setIdEditNote = {setIdEditNote}
+      <BootstrapDialog 
         aria-labelledby="customized-dialog-title"
         open = {open}
       >
-        <BootstrapDialogTitle 
-        setNewForm = {setNewForm} 
-        setIdEditNote = {setIdEditNote}
-        onClose={() => setOpen(false)}>
+        <BootstrapDialogTitle  
+        onClose={onCloseModal}>
           {newForm.id ? 'Edit note' : 'Add new note'}
         </BootstrapDialogTitle>
-          <AddEditForm 
-            setIdEditNote={setIdEditNote}
+          <ManageNoteForm 
             newForm = {newForm}
-            setOpen = {setOpen}
-            idEditNote = {idEditNote}
-            setNewForm = {setNewForm}
             onAdd = {onAdd}
             onEdit = {onEdit}
-          />
+            onCloseModal = {onCloseModal}
+          />    
       </BootstrapDialog>
     </Grid>
   )
