@@ -4,19 +4,12 @@ import CloseIcon from '@mui/icons-material/Close';
 import DialogTitle from '@mui/material/DialogTitle';
 
 const BootstrapDialogTitle = ({ children, onClose, ...other }) => {
-    BootstrapDialogTitle.propTypes = {
-      children: PropTypes.node,
-      onClose: PropTypes.func.isRequired,
-    };  
     return (
     <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
       {children}  
-      {onClose ? (
         <IconButton
           aria-label="close"
-          onClick={() => {
-            onClose();
-          }}
+          onClose={onClose}
           sx={{
             position: 'absolute',
             right: 8,
@@ -26,9 +19,13 @@ const BootstrapDialogTitle = ({ children, onClose, ...other }) => {
         >
           <CloseIcon />
         </IconButton>
-      ) : null}
     </DialogTitle>
   )
 }
+
+BootstrapDialogTitle.propTypes = {
+  children: PropTypes.node,
+  onClose: PropTypes.func.isRequired,
+}; 
 
 export default BootstrapDialogTitle

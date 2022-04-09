@@ -9,7 +9,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Grid from '@mui/material/Grid';
 import DialogContent from '@mui/material/DialogContent';
 
-const ManageNoteForm = ({onAdd,onEdit,newForm,onCloseModal}) => {
+const ManageNoteForm = ({onAdd,onEdit,newForm,onClose}) => {
   const [title, setTitle] = useState(newForm.title)
   const [content, setContent] = useState(newForm.content)
   const onSubmit = (e) => {
@@ -18,10 +18,7 @@ const ManageNoteForm = ({onAdd,onEdit,newForm,onCloseModal}) => {
     setContent('');
     if(newForm.id){
       onEdit(title, content)
-    }
-    else{
-      onAdd({title,content})
-    }
+    } else{onAdd(title,content)}
   }
   return (
     <Grid>
@@ -72,7 +69,7 @@ const ManageNoteForm = ({onAdd,onEdit,newForm,onCloseModal}) => {
                   {newForm.id ? 'Edit' : 'Add'}
               </Button>
               <Button 
-                onClick={() => onCloseModal()}
+                onClick={onClose}
                 sx={{width:103, height:40, backgroundColor:'#0097b3'}} 
                 variant="contained"
                 startIcon={<CancelIcon />} 

@@ -50,18 +50,19 @@ function App() {
     setOpen(false)
     setNewForm({})
   }
-  const addNote = (note) => {
+  const addNote = (title,content) => {
     const id=Math.floor(Math.random()*10000) + 1
     const newNote = {
       id: id,
+      title: title,
+      content: content,
       date: date,
-      ...note
     }
     setNotes([...notes,newNote])
     onCloseModal()
   }
-  const openEditModal = (id) => {
-    setNewForm(notes.find((note) => note.id === id))
+  const openEditModal = (note) => {
+    setNewForm(note)
     setOpen(true)
   }
   const editNote = (title, content) => {
