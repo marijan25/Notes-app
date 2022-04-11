@@ -1,8 +1,7 @@
-import  Grid from "@mui/material/Grid"
+import Grid from "@mui/material/Grid"
 import NoteAltIcon from '@mui/icons-material/NoteAlt';
 import Box from '@mui/material/Box'
-import { Typography } from "@mui/material";
-import Stack from '@mui/material/Stack';
+import Typography from "@mui/material/Typography";
 
 const Heading = () => {
   return (
