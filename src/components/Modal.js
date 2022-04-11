@@ -1,24 +1,38 @@
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
-import NoteAddIcon from '@mui/icons-material/NoteAdd';
+import { styled } from '@mui/material/styles';
+import Dialog from '@mui/material/Dialog';
+import ManageNoteForm from './ManageNoteForm';
+import BootstrapDialogTitle from '../components/BootstrapDialogTitle';
 
-export default function CustomizedDialogs({children,setOpen}) {
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };  
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  '& .MuiDialogContent-root': {
+    padding: theme.spacing(2)
+  },
+  '& .MuiDialogActions-root': {
+    padding: theme.spacing(1),
+  },
+}));
+
+const Modal = ({onAdd,onEdit,newForm,open,onClose}) => {
   return (
     <Grid>
-      <Button 
-        sx={{backgroundColor:'#21b5b4',color:'white',width:200,height:57}} 
-        variant="contained" 
-        onClick={handleClickOpen}
-        startIcon={<NoteAddIcon />}>
-          Add New Note
-      </Button>
-        {children}
+      <BootstrapDialog 
+        aria-labelledby="customized-dialog-title"
+        open = {open}
+       >
+        <BootstrapDialogTitle  
+         onClose={onClose}>
+          {newForm.id ? 'Edit note' : 'Add new note'}
+        </BootstrapDialogTitle>
+          <ManageNoteForm 
+            newForm = {newForm}
+            onAdd = {onAdd}
+            onEdit = {onEdit}
+            onClose = {onClose}
+          />    
+      </BootstrapDialog>
     </Grid>
-  );
+  )
 }
+
+export default Modal

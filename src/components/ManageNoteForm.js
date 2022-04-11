@@ -7,76 +7,31 @@ import Stack from '@mui/material/Stack';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Grid from '@mui/material/Grid';
-import { styled } from '@mui/material/styles';
-import Dialog from '@mui/material/Dialog';
-import PropTypes from 'prop-types';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  '& .MuiDialogContent-root': {
-    padding: theme.spacing(2)
-  },
-  '& .MuiDialogActions-root': {
-    padding: theme.spacing(1),
-  },
-}));
-const BootstrapDialogTitle = (props) => {
-  const { children, onClose, ...other } = props;
-  return (
-    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-      {children}
-      {onClose ? (
-        <IconButton
-          aria-label="close"
-          onClick={onClose}
-          sx={{
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-      ) : null}
-    </DialogTitle>
-  );
-};
-BootstrapDialogTitle.propTypes = {
-  children: PropTypes.node,
-  onClose: PropTypes.func.isRequired,
-};  
-const AddForm = ({onAdd,open,setOpen}) => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+const ManageNoteForm = ({onAdd,onEdit,newForm,onClose}) => {
+  const [title, setTitle] = useState(newForm.title)
+  const [content, setContent] = useState(newForm.content)
   const onSubmit = (e) => {
-    e.preventDefault()
-    onAdd({title,content})
-    setOpen(false)
-    setTitle('')
-    setContent('')
+    e.preventDefault();
+    setTitle('');
+    setContent('');
+    if(newForm.id){
+      onEdit(title, content)
+    } else {
+      onAdd(title,content)
+    }
   }
   return (
     <Grid>
-      <BootstrapDialog
-        onClose={() => setOpen(false)}
-        aria-labelledby="customized-dialog-title"
-        open = {open}
-      >
-        <BootstrapDialogTitle onClose={() => setOpen(false)}>
-          Add new note
-        </BootstrapDialogTitle>
-        <form onSubmit={onSubmit}> 
+      <form onSubmit={onSubmit}> 
           <DialogContent dividers>
             <Typography variant='paragraph' component='p' textAlign='center'>
-              <label>Add a new note subject/title</label> <br />
+              {newForm.id ? 'Edit a note subject/title' : 'Add a new note subject/title'} <br />
             </Typography>
             <TextField 
               sx={{marginTop:1,backgroundColor:'#6ffbff',width:226}}
-              value={title}
+              defaultValue={newForm.title}
               onChange = {(e) => setTitle(e.target.value)}
               required
               name='title'
@@ -89,12 +44,12 @@ const AddForm = ({onAdd,open,setOpen}) => {
                 component='p' 
                 textAlign='center'>
                 <Box>
-                  <label>Add content of note</label> <br />
+                  {newForm.id ? 'Edit content of note' : 'Add content of note'}<br />
                 </Box>
                 <TextField 
                   sx={{marginTop:1, backgroundColor:'#6ffbff', width:226}}
                   required
-                  value={content}
+                  defaultValue={newForm.content}
                   onChange = {(e) => setContent(e.target.value)}
                   name='content'
                   id="content"
@@ -109,26 +64,27 @@ const AddForm = ({onAdd,open,setOpen}) => {
               <Button 
                 sx={{width:103, height:40, backgroundColor:'#0097b3'}} 
                 variant="contained"  
-                disabled={!title||!content} 
+                disabled={!title || !content} 
                 startIcon={<AddCircleIcon />} 
                 type='submit' 
                 autoFocus>
-                  Add
+                  {newForm.id ? 'Edit' : 'Add'}
               </Button>
               <Button 
-                onClick={() => setOpen(false)}
+                onClick={onClose}
+                type = 'button'
                 sx={{width:103, height:40, backgroundColor:'#0097b3'}} 
                 variant="contained"
                 startIcon={<CancelIcon />} 
-                autoFocus>
+                autoFocus
+                >
                   Cancel
               </Button>
             </Stack>
           </DialogContent> 
         </form>
-      </BootstrapDialog>
     </Grid>
   )
 }
 
-export default AddForm
+export default ManageNoteForm

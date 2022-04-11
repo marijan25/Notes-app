@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 
-const Note = ({note}) => {
+const Note = ({note,openEditModal}) => {
   return (
     <Grid item xs = {4}>
       <Paper elevation={20} sx={{height:180,width:300,backgroundColor:'#9effff'}}>
@@ -23,8 +23,10 @@ const Note = ({note}) => {
           }}>
           <Box>
             <Stack direction="row">
-              <IconButton aria-label="edit">
-                <EditIcon />
+              <IconButton 
+                onClick={() => openEditModal(note)}
+              >
+                <EditIcon/>
               </IconButton>
               <IconButton aria-label="delete">
                 <DeleteIcon />
@@ -39,21 +41,28 @@ const Note = ({note}) => {
               {note.title}
           </Typography>
         </Box> 
-        <Box sx={{display: "flex",height:140, width:298}}> 
+        <Box sx={{display: "flex",height:170, width:298}}> 
           <Typography 
             variant='p' 
             component='paragraph' 
             sx={{height:140, width:298}} >
             <TextareaAutosize
-              style={{maxHeight:138,
-              maxWidth:295, minHeight:138,
-              minWidth:295,
+              style={{
+              maxWidth:295, maxHeight:98,
+              minWidth:295, minHeight:98,
               backgroundColor:'#9effff', color:'black', fontFamily:'arial', fontSize:14}} 
               multiline
               rows={6}
-              defaultValue={note.content}
+              value={note.content}
               disabled
             />
+            <Typography 
+            variant='h6' 
+            component='h3' 
+            textAlign={"center"} 
+            color={'white'} sx={{backgroundColor:'#9effff', color:'black', textAlign:'left', marginLeft:1}}>
+             Date: {note.date}
+            </Typography>
           </Typography>
         </Box>
       </Paper>
