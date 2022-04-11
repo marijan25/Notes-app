@@ -13,23 +13,22 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-const Modal = ({onAdd,onEdit,newForm,open,onCloseModal}) => {
+const Modal = ({onAdd,onEdit,newForm,open,onClose}) => {
   return (
     <Grid>
       <BootstrapDialog 
         aria-labelledby="customized-dialog-title"
         open = {open}
-        onClose = {onCloseModal}
        >
         <BootstrapDialogTitle  
-         onClose={onCloseModal}>
+         onClose={onClose}>
           {newForm.id ? 'Edit note' : 'Add new note'}
         </BootstrapDialogTitle>
           <ManageNoteForm 
             newForm = {newForm}
             onAdd = {onAdd}
             onEdit = {onEdit}
-            onClose = {onCloseModal}
+            onClose = {onClose}
           />    
       </BootstrapDialog>
     </Grid>

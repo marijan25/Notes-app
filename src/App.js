@@ -81,13 +81,14 @@ function App() {
           <CustomizedDialogs
             open={open} 
             setOpen = {setOpen}
+            onClose = {onCloseModal}
             >
             <Modal 
               onAdd = {addNote} 
               onEdit = {editNote}
               open={open} 
               newForm = {newForm}
-              onCloseModal = {onCloseModal}
+              onClose = {onCloseModal}
               />      
           </CustomizedDialogs>
         </BottomNavigation > 

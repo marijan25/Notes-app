@@ -70,6 +70,7 @@ const ManageNoteForm = ({onAdd,onEdit,newForm,onClose}) => {
               </Button>
               <Button 
                 onClick={onClose}
+                type = 'button'
                 sx={{width:103, height:40, backgroundColor:'#0097b3'}} 
                 variant="contained"
                 startIcon={<CancelIcon />} 
