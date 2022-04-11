@@ -18,7 +18,9 @@ const ManageNoteForm = ({onAdd,onEdit,newForm,onClose}) => {
     setContent('');
     if(newForm.id){
       onEdit(title, content)
-    } else{onAdd(title,content)}
+    } else {
+      onAdd(title,content)
+    }
   }
   return (
     <Grid>
