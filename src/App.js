@@ -6,7 +6,6 @@ import Heading from './components/Heading';
 import Paper from '@mui/material/Paper';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import { useState } from 'react';
-import DeleteModal from './components/DeleteModal';
 import Modal from './components/Modal'
 
 const data = [
@@ -73,34 +72,10 @@ function App() {
     setNotes(notes)
     onCloseModal()
   }
-  const [openDeleteModal, setOpenDeleteModal] = useState({
-    show: false,
-    id: null,
-    titleNote: ""
-  });
-  const handleDialog = (show, id, titleNote) => {
-    setOpenDeleteModal({
-      show,
-      id,
-      titleNote
-    })
-  }
   const deleteNote = (id) => {
-   const index = notes.findIndex((note) => note.id === id)
-   handleDialog(true, id, notes[index].title)
+    let filteredData = notes.filter((note) => note.id !== id)
+    setNotes(filteredData)
   }
-  const deleteNoteTrue = (id, titleNote) => {
-    if(openDeleteModal.show && openDeleteModal.id){
-      let filteredData = notes.filter((note) => note.id !== openDeleteModal.id)
-      setNotes(filteredData)
-      setOpenDeleteModal({
-        show: false,
-        id,
-        titleNote
-      })
-    }
-  }
-  
   return (
     <Grid>
       <Paper 
@@ -118,16 +93,10 @@ function App() {
               open={open} 
               newForm = {newForm}
               onClose = {onCloseModal}
-              />      
+              />     
           </CustomizedDialogs>
         </BottomNavigation > 
       </Paper>  
-      {openDeleteModal.show && <DeleteModal 
-        titleNote={openDeleteModal.titleNote}
-        openDeleteModal={openDeleteModal} 
-        setOpenDeleteModal={setOpenDeleteModal} 
-        deleteNoteTrue={deleteNoteTrue}
-      />}
       <Heading />
       <Container sx={{marginTop:5, marginBottom:12}}>    
         <Grid container spacing={5}>   
@@ -135,7 +104,7 @@ function App() {
           note={note} 
           key={note.id} 
           openEditModal={openEditModal} 
-          onDelete = {deleteNote}
+          deleteNote = {deleteNote}
           />)}  
         </Grid>
       </Container>   

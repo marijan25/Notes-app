@@ -1,52 +1,45 @@
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Modal from '@mui/material/Modal';
 import Stack from '@mui/material/Stack';
-import Grid from '@mui/material/Grid';
+import { styled } from '@mui/material/styles';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 155,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  p: 2,
-  textAlign: 'center'
-};
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  '& .MuiDialogContent-root': {
+    padding: theme.spacing(2)
+  },
+  '& .MuiDialogActions-root': {
+    padding: theme.spacing(1),
+  },
+}));
 
-export default function BasicModal({titleNote, openDeleteModal, setOpenDeleteModal, deleteNoteTrue}) {
-  const handleOpen = () => setOpenDeleteModal(true);
-  const handleClose = () => setOpenDeleteModal(false);
+const DeleteModal = ({deleteNote,note,open,setOpen}) => {
   return (
-    <Grid>
-      <Modal
-        open={openDeleteModal}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <p>Delete "{titleNote}"?</p>
-            <Stack spacing={3} direction='row'>
-                <Button 
-                    onClick={deleteNoteTrue} 
-                    variant='contained' 
-                    color='error' 
-                    sx={{color:'white'}}
-                    >
-                        Yes
-                </Button>
-                <Button 
-                    onClick={handleClose} 
-                    variant='contained' 
-                    color='success' 
-                    sx={{backgroundColor:'green', color:'white'}}>
-                        No
-                </Button>
+    <BootstrapDialog
+      open={open}
+    >
+      <DialogContent>
+        <p>Delete "{note.title}"?</p>
+          <Stack spacing={3} direction='row'>
+            <Button 
+              onClick={() => deleteNote(note.id)} 
+              variant='contained' 
+              color='error' 
+              sx={{color:'white'}}
+            >
+              Yes
+            </Button>
+            <Button 
+              onClick={() => setOpen(false)} 
+              variant='contained' 
+              color='success' 
+              sx={{backgroundColor:'green', color:'white'}}>
+                No
+            </Button>
           </Stack>
-        </Box>
-      </Modal>
-    </Grid>
+      </DialogContent>
+    </BootstrapDialog>
   );
 }
+
+export default DeleteModal
