@@ -6,9 +6,9 @@ import Typography  from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
-import CustomizedDialogs from '../components/openModalDelete';
-import DeleteModal from '../components/DeleteModal';
+import CustomizedDialogs from '../components/DeleteModal';
 import { useState } from 'react';
+import DeleteNoteForm from '../components/DeleteNoteForm';
 
 const Note = ({note,openEditModal,deleteNote}) => {
   const [open, setOpen] = useState(false)
@@ -35,7 +35,7 @@ const Note = ({note,openEditModal,deleteNote}) => {
               open={open}
               setOpen={setOpen}
               >
-                <DeleteModal 
+                <DeleteNoteForm 
                   note={note}
                   open={open}
                   setOpen={setOpen}
