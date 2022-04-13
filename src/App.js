@@ -3,10 +3,10 @@ import Grid from '@mui/material/Grid';
 import Note from './components/Note';
 import { Container } from '@mui/material';
 import Heading from './components/Heading';
-import Paper from '@mui/material/Paper'
+import Paper from '@mui/material/Paper';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import { useState } from 'react';
-import Modal from './components/Modal';
+import Modal from './components/Modal'
 
 const data = [
   {
@@ -72,6 +72,10 @@ function App() {
     setNotes(notes)
     onCloseModal()
   }
+  const deleteNote = (id) => {
+    let filteredData = notes.filter((note) => note.id !== id)
+    setNotes(filteredData)
+  }
   return (
     <Grid>
       <Paper 
@@ -83,13 +87,13 @@ function App() {
             setOpen = {setOpen}
             onClose = {onCloseModal}
             >
-            <Modal 
+            <Modal
               onAdd = {addNote} 
               onEdit = {editNote}
               open={open} 
               newForm = {newForm}
               onClose = {onCloseModal}
-              />      
+              />     
           </CustomizedDialogs>
         </BottomNavigation > 
       </Paper>  
@@ -100,6 +104,7 @@ function App() {
           note={note} 
           key={note.id} 
           openEditModal={openEditModal} 
+          deleteNote = {deleteNote}
           />)}  
         </Grid>
       </Container>   

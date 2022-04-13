@@ -1,7 +1,7 @@
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
-import ManageNoteForm from './ManageNoteForm';
+import ManageNoteForm from '../components/ManageNoteForm';
 import BootstrapDialogTitle from '../components/BootstrapDialogTitle';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
