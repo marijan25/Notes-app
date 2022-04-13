@@ -22,7 +22,10 @@ const DeleteNoteForm = ({deleteNote,note,open,setOpen}) => {
         <p>Delete "{note.title}"?</p>
           <Stack spacing={3} direction='row'>
             <Button 
-              onClick={() => deleteNote(note.id)} 
+              onClick={() => {
+                deleteNote(note.id)
+                setOpen(false)
+              }} 
               variant='contained' 
               color='error' 
               sx={{color:'white'}}
