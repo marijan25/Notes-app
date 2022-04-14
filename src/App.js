@@ -27,9 +27,9 @@ function App() {
       date: date,
     }
     setNotes([...notes,newNote])
+    localStorage.setItem('notes', JSON.stringify([...notes, newNote]));
     onCloseModal()
   }
-  localStorage.setItem('notes', JSON.stringify(notes));
   const openEditModal = (note) => {
     setNewForm(note)
     setOpen(true)
@@ -69,15 +69,15 @@ function App() {
       {notes.length ? 
         (<Container sx={{marginTop:5, marginBottom:12}}>    
           <Grid container spacing={5}>  
-          {notes.map((note) => <Note 
-          note={note} 
-          key={note.id} 
-          openEditModal={openEditModal} 
-          deleteNote = {deleteNote}
+            {notes.map((note) => <Note 
+            note={note} 
+            key={note.id} 
+            openEditModal={openEditModal} 
+            deleteNote = {deleteNote}
           />)} 
-        </Grid>
-        </Container>) : (<h1 style={{marginLeft: 200}}>No Notes To Show</h1>)
-      }   
+          </Grid>
+        </Container>) : (<h1 style={{marginLeft: 200}}>No notes to show</h1>)
+      }  
     </Grid>
   );
 }
