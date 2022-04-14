@@ -5,18 +5,15 @@ import { Container } from '@mui/material';
 import Heading from './components/Heading';
 import Paper from '@mui/material/Paper';
 import BottomNavigation from '@mui/material/BottomNavigation';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Modal from './components/Modal'
 
 function App() {
-  const [notes, setNotes] = useState(JSON.parse(localStorage.getItem("notes") || "[]"))
+  const [notes, setNotes] = useState([],JSON.parse(localStorage.getItem("notes") || "[]"))
   const [open, setOpen] = useState(false)
   const [newForm, setNewForm] = useState({});
   const current = new Date()
   const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
-  useEffect(() => {
-    localStorage.setItem('notes', JSON.stringify(notes))
-  },[notes])
   const onCloseModal = () => {
     setOpen(false)
     setNewForm({})
@@ -30,6 +27,7 @@ function App() {
       date: date,
     }
     setNotes([...notes,newNote])
+    localStorage.setItem('notes', JSON.stringify(notes));
     onCloseModal()
   }
   const openEditModal = (note) => {
@@ -41,7 +39,6 @@ function App() {
     newForm.content = content;
     newForm.date = date
     setNotes(notes)
-    localStorage.setItem('notes', JSON.stringify(notes));
     onCloseModal()
   }
   const deleteNote = (id) => {
@@ -69,17 +66,18 @@ function App() {
         </BottomNavigation > 
       </Paper>  
       <Heading />
-      {notes.length ? '' : <h1 style={{marginLeft: 200}}>No Notes To Show</h1>}
-      <Container sx={{marginTop:5, marginBottom:12}}>    
-        <Grid container spacing={5}>  
-        {notes.map((note) => <Note 
+      {notes.length ? 
+        (<Container sx={{marginTop:5, marginBottom:12}}>    
+          <Grid container spacing={5}>  
+          {notes.map((note) => <Note 
           note={note} 
           key={note.id} 
           openEditModal={openEditModal} 
           deleteNote = {deleteNote}
           />)} 
         </Grid>
-      </Container>   
+        </Container>) : (<h1 style={{marginLeft: 200}}>No Notes To Show</h1>)
+      }   
     </Grid>
   );
 }
