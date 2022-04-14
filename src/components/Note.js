@@ -27,7 +27,7 @@ const Note = ({note,openEditModal,deleteNote}) => {
           <Box>
             <Stack direction="row">
               <IconButton 
-                onClick={() => {openEditModal(note)}}
+                onClick={() => openEditModal(note)}
               >
                 <EditIcon/>
               </IconButton>
