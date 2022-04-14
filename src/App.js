@@ -39,11 +39,13 @@ function App() {
     newForm.content = content;
     newForm.date = date
     setNotes(notes)
+    localStorage.setItem('notes', JSON.stringify(notes));
     onCloseModal()
   }
   const deleteNote = (id) => {
     let filteredData = notes.filter((note) => note.id !== id)
     setNotes(filteredData)
+    localStorage.setItem('notes', JSON.stringify(filteredData));
   }
   return (
     <Grid>
