@@ -65,17 +65,18 @@ function App() {
         </BottomNavigation > 
       </Paper>  
       <Heading />
-      {notes.length ? '' : <h1 style={{marginLeft: 200}}>No Notes To Show</h1>}
-      <Container sx={{marginTop:5, marginBottom:12}}>    
-        <Grid container spacing={5}>  
-        {notes.map((note) => <Note 
-          note={note} 
-          key={note.id} 
-          openEditModal={openEditModal} 
-          deleteNote = {deleteNote}
+      {notes.length ? 
+        (<Container sx={{marginTop:5, marginBottom:12}}>    
+          <Grid container spacing={5}>  
+            {notes.map((note) => <Note 
+            note={note} 
+            key={note.id} 
+            openEditModal={openEditModal} 
+            deleteNote = {deleteNote}
           />)} 
-        </Grid>
-      </Container>   
+          </Grid>
+        </Container>) : (<h1 style={{marginLeft: 200}}>No notes to show</h1>)
+      }  
     </Grid>
   );
 }
