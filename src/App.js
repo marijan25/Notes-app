@@ -9,7 +9,7 @@ import { useState } from 'react';
 import Modal from './components/Modal'
 
 function App() {
-  const [notes, setNotes] = useState([])
+  const [notes, setNotes] = useState(JSON.parse(localStorage.getItem("notes") || "[]"))
   const [open, setOpen] = useState(false)
   const [newForm, setNewForm] = useState({});
   const current = new Date()
@@ -27,6 +27,7 @@ function App() {
       date: date,
     }
     setNotes([...notes,newNote])
+    localStorage.setItem('notes', JSON.stringify([...notes, newNote]));
     onCloseModal()
   }
   const openEditModal = (note) => {
