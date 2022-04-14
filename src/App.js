@@ -5,15 +5,18 @@ import { Container } from '@mui/material';
 import Heading from './components/Heading';
 import Paper from '@mui/material/Paper';
 import BottomNavigation from '@mui/material/BottomNavigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Modal from './components/Modal'
 
 function App() {
-  const [notes, setNotes] = useState([])
+  const [notes, setNotes] = useState(JSON.parse(localStorage.getItem("notes") || "[]"))
   const [open, setOpen] = useState(false)
   const [newForm, setNewForm] = useState({});
   const current = new Date()
   const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+  useEffect(() => {
+    localStorage.setItem('notes', JSON.stringify(notes))
+  },[notes])
   const onCloseModal = () => {
     setOpen(false)
     setNewForm({})
@@ -38,6 +41,7 @@ function App() {
     newForm.content = content;
     newForm.date = date
     setNotes(notes)
+    localStorage.setItem('notes', JSON.stringify(notes));
     onCloseModal()
   }
   const deleteNote = (id) => {
