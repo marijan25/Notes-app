@@ -16,7 +16,7 @@ const ManageNoteForm = ({editForm,loadData,handleCloseModal}) => {
   const onSubmit = (e) => {
     e.preventDefault();
     if(editForm.id){
-      EditNote(editForm)
+      EditNote({title,content,id:editForm.id})
       loadData() 
     } else {
       AddNote({title,content})

@@ -24,6 +24,5 @@ export function EditNote (editForm){
    const findNote = notes.find((note) => note.id === editForm.id)
    findNote.title = editForm.title
    findNote.content = editForm.content
-   console.log(editForm)
    localStorage.setItem('notes', JSON.stringify(notes))
 }
