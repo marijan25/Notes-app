@@ -7,19 +7,19 @@ import Paper from '@mui/material/Paper';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import { useState } from 'react';
 import Modal from './components/Modal'
-import NoteService from './NoteService'
+import { GetNotes } from './NoteService'
 
 function App() {
-  const [notes, setNotes] = useState(NoteService.GetNotes())
+  const [notes, setNotes] = useState(GetNotes())
   const [open, setOpen] = useState(false)
   const [editForm, setEditForm] = useState({});
-  const onCloseModal = () => {
+  const handleCloseModal = () => {
     setOpen(false)
     setEditForm({})
   }
-  const refresh = () => {
-    onCloseModal()
-    setNotes(NoteService.GetNotes())
+  const loadData = () => {
+    handleCloseModal()
+    setNotes(GetNotes())
   }
   const openEditModal = (note) => {
     setEditForm(note)
@@ -33,12 +33,14 @@ function App() {
           <CustomizedDialogs
             open={open} 
             setOpen = {setOpen}
-            refresh = {refresh}
+            loadData = {loadData}
+            handleCloseModal = {handleCloseModal}
             >
             <Modal
               open={open} 
               editForm = {editForm}
-              refresh = {refresh}
+              loadData = {loadData}
+              handleCloseModal = {handleCloseModal}
               />     
           </CustomizedDialogs>
         </BottomNavigation > 
@@ -51,7 +53,7 @@ function App() {
             note={note} 
             key={note.id} 
             openEditModal={openEditModal} 
-            refresh = {refresh}
+            loadData = {loadData}
           />)} 
           </Grid>
         </Container>) : (<h1 style={{marginLeft: 200}}>No notes to show</h1>)

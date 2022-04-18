@@ -3,7 +3,7 @@ import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
-import NoteService from '../NoteService';
+import { DeleteNote } from '../NoteService';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -14,7 +14,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-const DeleteNoteForm = ({refresh,note,open,setOpen}) => {
+const DeleteNoteForm = ({loadData,note,open,setOpen}) => {
   return (
     <BootstrapDialog
       open={open}
@@ -24,8 +24,8 @@ const DeleteNoteForm = ({refresh,note,open,setOpen}) => {
           <Stack spacing={3} direction='row'>
             <Button 
               onClick={() => {
-                NoteService.DeleteNote(note.id)
-                refresh()
+                DeleteNote(note.id)
+                loadData()
               }} 
               variant='contained' 
               color='error' 

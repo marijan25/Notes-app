@@ -10,7 +10,7 @@ import CustomizedDialogs from '../components/DeleteModal';
 import { useState } from 'react';
 import DeleteNoteForm from '../components/DeleteNoteForm';
 
-const Note = ({note,openEditModal,deleteNote,refresh}) => {
+const Note = ({note,openEditModal,loadData}) => {
   const [open, setOpen] = useState(false)
   return (
     <Grid item xs = {4}>
@@ -39,7 +39,7 @@ const Note = ({note,openEditModal,deleteNote,refresh}) => {
                   note={note}
                   open={open}
                   setOpen={setOpen}
-                  refresh = {refresh}
+                  loadData = {loadData}
                 />
               </CustomizedDialogs>
             </Stack>

@@ -8,19 +8,19 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Grid from '@mui/material/Grid';
 import DialogContent from '@mui/material/DialogContent';
-import NoteService from '../NoteService';
+import { EditNote,AddNote } from '../NoteService';
 
-const ManageNoteForm = ({editForm,refresh}) => {
+const ManageNoteForm = ({editForm,loadData,handleCloseModal}) => {
   const [title, setTitle] = useState(editForm.title)
   const [content, setContent] = useState(editForm.content)
   const onSubmit = (e) => {
     e.preventDefault();
     if(editForm.id){
-      NoteService.EditNote({title:title,content:content,id:editForm.id})
-      refresh() 
+      EditNote(editForm)
+      loadData() 
     } else {
-      NoteService.AddNote({title:title,content:content})
-      refresh()
+      AddNote({title,content})
+      loadData()
     }
     setTitle('')
     setTitle('')
@@ -74,7 +74,7 @@ const ManageNoteForm = ({editForm,refresh}) => {
                   {editForm.id ? 'Edit' : 'Add'}
               </Button>
               <Button 
-                onClick={refresh}
+                onClick={handleCloseModal}
                 type = 'button'
                 sx={{width:103, height:40, backgroundColor:'#0097b3'}} 
                 variant="contained"

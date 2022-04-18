@@ -3,13 +3,13 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import DialogTitle from '@mui/material/DialogTitle';
 
-const BootstrapDialogTitle = ({ children,refresh, ...other }) => {
+const BootstrapDialogTitle = ({ children,handleCloseModal, ...other }) => {
     return (
     <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
       {children}  
         <IconButton
           aria-label="close"
-          onClick={refresh}
+          onClick={handleCloseModal}
           type='button'
           sx={{
             position: 'absolute',
