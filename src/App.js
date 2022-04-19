@@ -7,10 +7,10 @@ import Paper from '@mui/material/Paper';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import { useState } from 'react';
 import Modal from './components/Modal'
-import { GetNotes } from './NoteService'
+import { getNotes } from './NoteService'
 
 function App() {
-  const [notes, setNotes] = useState(GetNotes())
+  const [notes, setNotes] = useState(getNotes())
   const [open, setOpen] = useState(false)
   const [editForm, setEditForm] = useState({});
   const handleCloseModal = () => {
@@ -19,7 +19,7 @@ function App() {
   }
   const loadData = () => {
     handleCloseModal()
-    setNotes(GetNotes())
+    setNotes(getNotes())
   }
   const openEditModal = (note) => {
     setEditForm(note)
