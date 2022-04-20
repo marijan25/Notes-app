@@ -7,7 +7,6 @@ export const getNotes = async () => {
   }
 
 export const addNote = async (newNote) => {
-    getNotes()
     newNote.date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
     fetch('http://localhost:8000/notes', {
       method: 'POST',
@@ -19,7 +18,6 @@ export const addNote = async (newNote) => {
 }
 
 export const deleteNote = async (id) => {
-    getNotes()
     fetch(`http://localhost:8000/notes/${id}`, {
       method: 'DELETE',
       headers: {
@@ -29,7 +27,6 @@ export const deleteNote = async (id) => {
 }
 
 export const editNote = async (editForm) => {
-    getNotes()
     editForm.date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
     fetch(`http://localhost:8000/notes/${editForm.id}`, {
       method: 'PUT',
