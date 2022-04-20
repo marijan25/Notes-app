@@ -8,18 +8,21 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Grid from '@mui/material/Grid';
 import DialogContent from '@mui/material/DialogContent';
+import { editNote,addNote } from '../NoteService';
 
-const ManageNoteForm = ({onAdd,onEdit,newForm,onClose}) => {
-  const [title, setTitle] = useState(newForm.title)
-  const [content, setContent] = useState(newForm.content)
+const ManageNoteForm = ({editForm,loadData,handleCloseModal}) => {
+  const [title, setTitle] = useState(editForm.title)
+  const [content, setContent] = useState(editForm.content)
   const onSubmit = (e) => {
     e.preventDefault();
-    setTitle('');
-    setContent('');
-    if(newForm.id){
-      onEdit(title, content)
+    setTitle('')
+    setTitle('')
+    if(editForm.id){
+      editNote({title,content,id:editForm.id})
+      loadData() 
     } else {
-      onAdd(title,content)
+      addNote({title,content})
+      loadData()
     }
   }
   return (
@@ -27,11 +30,11 @@ const ManageNoteForm = ({onAdd,onEdit,newForm,onClose}) => {
       <form onSubmit={onSubmit}> 
           <DialogContent dividers>
             <Typography variant='paragraph' component='p' textAlign='center'>
-              {newForm.id ? 'Edit a note subject/title' : 'Add a new note subject/title'} <br />
+              {editForm.id ? 'Edit a note subject/title' : 'Add a new note subject/title'} <br />
             </Typography>
             <TextField 
               sx={{marginTop:1,backgroundColor:'#6ffbff',width:226}}
-              defaultValue={newForm.title}
+              defaultValue={editForm.title}
               onChange = {(e) => setTitle(e.target.value)}
               required
               name='title'
@@ -44,12 +47,12 @@ const ManageNoteForm = ({onAdd,onEdit,newForm,onClose}) => {
                 component='p' 
                 textAlign='center'>
                 <Box>
-                  {newForm.id ? 'Edit content of note' : 'Add content of note'}<br />
+                  {editForm.id ? 'Edit content of note' : 'Add content of note'}<br />
                 </Box>
                 <TextField 
                   sx={{marginTop:1, backgroundColor:'#6ffbff', width:226}}
                   required
-                  defaultValue={newForm.content}
+                  defaultValue={editForm.content}
                   onChange = {(e) => setContent(e.target.value)}
                   name='content'
                   id="content"
@@ -68,10 +71,10 @@ const ManageNoteForm = ({onAdd,onEdit,newForm,onClose}) => {
                 startIcon={<AddCircleIcon />} 
                 type='submit' 
                 autoFocus>
-                  {newForm.id ? 'Edit' : 'Add'}
+                  {editForm.id ? 'Edit' : 'Add'}
               </Button>
               <Button 
-                onClick={onClose}
+                onClick={handleCloseModal}
                 type = 'button'
                 sx={{width:103, height:40, backgroundColor:'#0097b3'}} 
                 variant="contained"

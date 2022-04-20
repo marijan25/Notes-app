@@ -7,45 +7,23 @@ import Paper from '@mui/material/Paper';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import { useState } from 'react';
 import Modal from './components/Modal'
+import { getNotes } from './NoteService'
 
 function App() {
-  const [notes, setNotes] = useState(JSON.parse(localStorage.getItem("notes") || "[]"))
+  const [notes, setNotes] = useState(getNotes())
   const [open, setOpen] = useState(false)
-  const [newForm, setNewForm] = useState({});
-  const current = new Date()
-  const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
-  const onCloseModal = () => {
+  const [editForm, setEditForm] = useState({});
+  const handleCloseModal = () => {
     setOpen(false)
-    setNewForm({})
+    setEditForm({})
   }
-  const addNote = (title,content) => {
-    const id=Math.floor(Math.random()*10000) + 1
-    const newNote = {
-      id: id,
-      title: title,
-      content: content,
-      date: date,
-    }
-    setNotes([...notes,newNote])
-    localStorage.setItem('notes', JSON.stringify([...notes, newNote]));
-    onCloseModal()
+  const loadData = () => {
+    handleCloseModal()
+    setNotes(getNotes())
   }
   const openEditModal = (note) => {
-    setNewForm(note)
+    setEditForm(note)
     setOpen(true)
-  }
-  const editNote = (title, content) => {
-    newForm.title = title;
-    newForm.content = content;
-    newForm.date = date
-    setNotes(notes)
-    localStorage.setItem('notes', JSON.stringify(notes));
-    onCloseModal()
-  }
-  const deleteNote = (id) => {
-    let filteredData = notes.filter((note) => note.id !== id)
-    setNotes(filteredData)
-    localStorage.setItem('notes', JSON.stringify(filteredData));
   }
   return (
     <Grid>
@@ -55,14 +33,14 @@ function App() {
           <CustomizedDialogs
             open={open} 
             setOpen = {setOpen}
-            onClose = {onCloseModal}
+            loadData = {loadData}
+            handleCloseModal = {handleCloseModal}
             >
             <Modal
-              onAdd = {addNote} 
-              onEdit = {editNote}
               open={open} 
-              newForm = {newForm}
-              onClose = {onCloseModal}
+              editForm = {editForm}
+              loadData = {loadData}
+              handleCloseModal = {handleCloseModal}
               />     
           </CustomizedDialogs>
         </BottomNavigation > 
@@ -75,7 +53,7 @@ function App() {
             note={note} 
             key={note.id} 
             openEditModal={openEditModal} 
-            deleteNote = {deleteNote}
+            loadData = {loadData}
           />)} 
           </Grid>
         </Container>) : (<h1 style={{marginLeft: 200}}>No notes to show</h1>)
