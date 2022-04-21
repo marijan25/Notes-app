@@ -1,29 +1,38 @@
 const current = new Date()
 
-export function getNotes (){
-    return JSON.parse(localStorage.getItem("notes"))
-}
+export const getNotes = async () => {
+    const res = await fetch('http://localhost:8000/notes')
+    const data = await res.json()   
+    return data
+  }
 
-export function addNote (newNote){
-    const notes = getNotes()
-    newNote.id = Math.floor(Math.random()*10000) + 1
+export const addNote = async (newNote) => {
     newNote.date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
-    notes.push(newNote)
-    localStorage.setItem('notes', JSON.stringify(notes));
+    fetch('http://localhost:8000/notes', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(newNote),
+    })
 }
 
-export function deleteNote (id){
-    const notes = getNotes()
-    let filteredData = notes.filter((note) => note.id !== id)
-    localStorage.setItem('notes', JSON.stringify(filteredData));
+export const deleteNote = async (id) => {
+    fetch(`http://localhost:8000/notes/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json',
+      },
+    })
 }
 
-export function editNote (editForm){
+export const editNote = async (editForm) => {
     editForm.date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
-    const notes = getNotes()
-    const findNote = notes.find((note) => note.id === editForm.id)
-    findNote.title = editForm.title
-    findNote.content = editForm.content
-    findNote.date = editForm.date
-    localStorage.setItem('notes', JSON.stringify(notes))
+    fetch(`http://localhost:8000/notes/${editForm.id}`, {
+      method: 'PUT',
+      body: JSON.stringify(editForm),
+      headers: {
+        'Content-type': 'application/json',
+      },
+    })
 }

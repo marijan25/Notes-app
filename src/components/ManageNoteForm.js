@@ -18,11 +18,9 @@ const ManageNoteForm = ({editForm,loadData,handleCloseModal}) => {
     setTitle('')
     setTitle('')
     if(editForm.id){
-      editNote({title,content,id:editForm.id})
-      loadData() 
+      editNote({title,content,id:editForm.id}).then(loadData)
     } else {
-      addNote({title,content})
-      loadData()
+      addNote({title,content}).then(loadData)
     }
   }
   return (

@@ -10,7 +10,8 @@ import Modal from './components/Modal'
 import { getNotes } from './NoteService'
 
 function App() {
-  const [notes, setNotes] = useState(getNotes())
+  const loadNotes = () => getNotes().then((note) => setNotes(note));
+  const [notes, setNotes] = useState(loadNotes)
   const [open, setOpen] = useState(false)
   const [editForm, setEditForm] = useState({});
   const handleCloseModal = () => {
@@ -19,7 +20,7 @@ function App() {
   }
   const loadData = () => {
     handleCloseModal()
-    setNotes(getNotes())
+    setNotes(loadNotes())
   }
   const openEditModal = (note) => {
     setEditForm(note)

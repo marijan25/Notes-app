@@ -24,8 +24,7 @@ const DeleteNoteForm = ({loadData,note,open,setOpen}) => {
           <Stack spacing={3} direction='row'>
             <Button 
               onClick={() => {
-                deleteNote(note.id)
-                loadData()
+                deleteNote(note.id).then(loadData)
               }} 
               variant='contained' 
               color='error' 
